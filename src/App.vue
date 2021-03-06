@@ -4,6 +4,8 @@
     ref="TopMenuBar"
     @toggle-sign-in-form="showSignInForm = !showSignInForm"
     @change-device="changeDevice"
+    @show-save-form="this.exportCanvasToJson(); showSaveForm = true"
+    @show-load-form="showLoadForm = true"
     :loggedIn="loggedIn()"/>
 
     <!-- Side bar panel to add controls to the canvas -->
@@ -48,6 +50,29 @@
         @logout="logout"
         @close-logout-confirm="this.showLogoutConfirm = false; this.showSignInForm = false"/>
     </transition>
+
+    <!-- Save Form (Shown when user saves a project) -->
+    <transition
+    name="show-hide-save-form"
+    enter-active-class="animate__animated animate__fadeInDown animate__faster"
+    leave-active-class="animate__animated animate__fadeOutUp animate__faster">
+        <SaveForm
+        @display-message="displayMessage"
+        v-if="showSaveForm"
+        :saveContent="save_content"
+        @close-save-form="this.showSaveForm = false"/>
+    </transition>
+
+    <!-- Load Form (Shown when user loads a project) -->
+    <transition
+    name="show-hide-load-form"
+    enter-active-class="animate__animated animate__fadeInDown animate__faster"
+    leave-active-class="animate__animated animate__fadeOutUp animate__faster">
+        <LoadForm
+        @display-message="displayMessage"
+        v-if="showLoadForm"
+        @close-load-form="this.showLoadForm = false"/>
+    </transition>
     
     <!-- Custom Device Size Form (shown when selecting 'Custom' in Top Menu Bar dropdown) -->
     <transition
@@ -89,6 +114,8 @@ import SignUpForm from "./components/SignUpForm.vue"
 import Canvas from "./components/Canvas.vue"
 import CustomSizeForm from "./components/CustomSizeForm.vue"
 import LogoutConfirm from "./components/LogoutConfirm.vue"
+import SaveForm from "./components/SaveForm.vue"
+import LoadForm from "./components/LoadForm.vue"
 
 export default {
     name: "App",
@@ -101,6 +128,8 @@ export default {
         Canvas,
         CustomSizeForm,
         LogoutConfirm,
+        SaveForm,
+        LoadForm,
     },
     data() {
         return {
@@ -112,6 +141,9 @@ export default {
             showCustomSizeForm: false,
             custom_size: null,
             showLogoutConfirm: false,
+            showSaveForm: false,
+            showLoadForm: false,
+            save_content: '',
         }
     },
     methods: {
@@ -135,6 +167,9 @@ export default {
         },
         addCircle() {
             this.$refs.canvas.addCircle()
+        },
+        exportCanvasToJson() {
+            this.save_content = this.$refs.canvas.exportCanvasToJson()
         },
         successfulSignIn() {
             this.$refs.TopMenuBar.$refs.SignIn.signIn()

@@ -102,7 +102,7 @@ export default {
         },
         signIn() {
             // Set Content-Type header
-            axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;';
+            axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded;';
 
             // Call the API
             return axios.get(process.env.VUE_APP_SVG_API_URL + '/login', this.auth);

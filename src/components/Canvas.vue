@@ -14,7 +14,8 @@ export default {
             canvas_width: 0,
             canvas: null,
             device: null,
-            objects: []
+            objects: [],
+            json: '',
         }
     },
     mounted() {
@@ -33,6 +34,19 @@ export default {
         }
     },
     methods: {
+        exportCanvasToJson() {
+            this.json = JSON.stringify(this.canvas.toJSON([
+                'inter_type',        // Controller Type (pad, vslider, etc)
+                'inter_osc_address', // OSC Address
+                'inter_osc_args',    // OSC Static Arguments (int or float)
+                'min',               // Min value for slider & endless
+                'max',               // Max value for slider & endless
+                'init',              // Initial value for slider & endless
+                'incr',              // Increment for slider & endless
+            ]));
+
+            return this.json
+        },
         changeDevice(device) {
             switch(device) {
                 case "sensel-morph":
@@ -77,8 +91,8 @@ export default {
             var grid = 50
 
             for (var i = 0; i < (this.canvas_width / grid); i++) {
-                canvas.add(new fabric.Line([i * grid, 0, i * grid, this.canvas_height], { stroke: '#ccc', selectable: false }))
-                canvas.add(new fabric.Line([ 0, i * grid, this.canvas_width, i * grid], { stroke: '#ccc', selectable: false }))
+                canvas.add(new fabric.Line([i * grid, 0, i * grid, this.canvas_height], { stroke: '#ccc', selectable: false, excludeFromExport: true }))
+                canvas.add(new fabric.Line([ 0, i * grid, this.canvas_width, i * grid], { stroke: '#ccc', selectable: false, excludeFromExport: true }))
             }
             
             canvas.on('object:moving', function(options) {
@@ -90,7 +104,7 @@ export default {
             
             this.canvas = canvas
 
-            const helperObj = new fabric.Object({})    //abstract invisible object
+            const helperObj = new fabric.Object({ excludeFromExport: true })    //abstract invisible object
             helperObj.set("selectable", false)         //so the user is not able to select and modify it manually
             this.canvas.add(helperObj)
 

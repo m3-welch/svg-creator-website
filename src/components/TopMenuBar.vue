@@ -17,9 +17,19 @@
                 <option value="custom">Custom</option>
                 <option value="none">None</option>
             </select>
-            <button id="top-menu-cloud-save-button" class="top-menu-control">
+            <button
+            id="top-menu-cloud-save-button"
+            class="top-menu-control"
+            @click="showSaveForm">
                 <i class="mi-cloud-upload"/>
                 Save
+            </button>
+            <button
+            id="top-menu-cloud-save-button"
+            class="top-menu-control"
+            @click="showLoadForm">
+                <i class="mi-cloud-download"/>
+                Load
             </button>
             <SignIn
             ref="SignIn"
@@ -45,6 +55,12 @@ export default {
         }
     },
     methods: {
+        showSaveForm() {
+            this.$emit('show-save-form')
+        },
+        showLoadForm() {
+            this.$emit('show-load-form')
+        },
         selectDevice() {
             this.$emit('change-device', this.device)
         },
