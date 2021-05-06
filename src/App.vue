@@ -2,6 +2,7 @@
     <!-- Top Menu Bar (Title, Export/Device/Save, Signin/Logout) -->
     <TopMenuBar
     ref="TopMenuBar"
+    @display-message="displayMessage"
     @toggle-sign-in-form="showSignInForm = !showSignInForm"
     @change-device="changeDevice"
     @show-export-menu="showExportMenu = !showExportMenu"
