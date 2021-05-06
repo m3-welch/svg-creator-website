@@ -15,10 +15,6 @@
                 <option value="sensel-morph">Sensel Morph</option>
                 <option value="roli-lightpad-block">Roli Lightpad Block</option>
             </select>
-            <button id="top-menu-cloud-save-button" class="top-menu-control">
-                <i class="mi-cloud-upload"/>
-                Save
-            </button>
             <SignIn
             ref="SignIn"
             @toggle-sign-in-form="toggleSignInForm"/>
