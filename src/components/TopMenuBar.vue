@@ -14,8 +14,6 @@
                 <option selected value="none">Select Device</option>
                 <option value="sensel-morph">Sensel Morph</option>
                 <option value="roli-lightpad-block">Roli Lightpad Block</option>
-                <option value="custom">Custom</option>
-                <option value="none">None</option>
             </select>
             <button id="top-menu-cloud-save-button" class="top-menu-control">
                 <i class="mi-cloud-upload"/>
