@@ -42,6 +42,7 @@ export default {
         showExportMenu() {
             if (this.device == 'none') {
                 this.$emit('display-message', 'error', 'You must select a device from the top menu bar')
+                return
             }
             this.$emit('show-export-menu')
         },
